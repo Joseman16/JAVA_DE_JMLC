@@ -37,10 +37,22 @@ public class Ejercicio03 {
         System.out.println(min(num, numDecimal));
         System.out.println(min(33, 30));
         
+            
+        /*  Limitar decimales en un decimal (double)
+            DecimalFormat df = new DecimalFormat("#.00");
+            System.out.println(df.format(number));
+        */
         
         //random(): devuelve un número aleatorio entre 0 y 1
+        System.out.println("\nrandom()");
         System.out.println(random());
-        System.out.println(random()*1);
+        System.out.println((random()*10));
+        
+        //round(x): Devuelve el entero más cercano a x.
+        System.out.println("\nround(x)");
+        System.out.println(round(num));
+        System.out.println(round(numDecimal));
+        System.out.println(round(9.78));
         
     }
     
