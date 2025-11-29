@@ -1,12 +1,9 @@
 
-package java_curso;
-
-import M2.JF1;
+package M2;
 
 
-public class Java_Curso {
+public class JF1_main {
 
-    
     public static void main(String[] args) {
         JF1 jf1 = new JF1();
         jf1.setVisible(true);
