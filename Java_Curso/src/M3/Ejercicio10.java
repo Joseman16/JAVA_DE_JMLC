@@ -29,5 +29,44 @@ public class Ejercicio10 {
         return resultadoSuma; 
     }
     
+    public static double resta(double num1, double num2){
+        
+        double resultadoResta = num1 - num2;
+
+        return resultadoResta;
+    }
+    
+    public static double mult (double num1, double num2){
+        
+        double resultadoMult = num1 * num2;
+        
+        return resultadoMult;
+    }
+    
+    public static double div (double num1, double num2){
+        double resultadoDiv = 0;
+        
+        if(num1> num2){
+            resultadoDiv = num1 / num2;
+            
+            return resultadoDiv;
+        }else{
+            resultadoDiv = num2 / num1;
+            
+            return resultadoDiv;
+        }
+    }
+    
+    public static double raizCuadrada (double num){
+        double raizCuadrada;
+        
+        if(num>0){
+            raizCuadrada = Math.sqrt(num);
+            return raizCuadrada;
+        }else{
+            return raizCuadrada = 0;
+        }
+    }
+    
     
 }
