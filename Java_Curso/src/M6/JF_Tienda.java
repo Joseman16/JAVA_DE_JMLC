@@ -5,6 +5,8 @@
 package M6;
 
 import java.util.ArrayList;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -26,14 +28,31 @@ public class JF_Tienda extends javax.swing.JFrame {
         listProducto = new ListaProducto();
         listCat_Product = new ListaCatProducto();
         
+        cargarCategorias();
+        
+        
         
         
     }
     
     public void Limpiar(){
-        
+        txtIDCat.setText("");
+        txtNombreCat.setText("");
     }
+    
+    public void cargarCategorias() {
+        DefaultComboBoxModel<String> modelo = new DefaultComboBoxModel<>();
+    
+        modelo.addElement("Seleccione una categoría"); // opción por defecto
 
+        for (CatProducto list : listCat_Product.catProductos) {
+            modelo.addElement(list.getNombreCat());
+            System.out.println(list.getNombreCat());
+        }
+
+        cbCategoria.setModel(modelo);
+    }
+   
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -57,9 +76,9 @@ public class JF_Tienda extends javax.swing.JFrame {
         txtNombre = new javax.swing.JTextField();
         cbCategoria = new javax.swing.JComboBox<>();
         txtPrecio = new javax.swing.JTextField();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        txtListaCategoria = new javax.swing.JTextPane();
         btnRegistrar = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        txtAreaListaCat = new javax.swing.JTextArea();
         panel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -127,6 +146,11 @@ public class JF_Tienda extends javax.swing.JFrame {
         panel1.add(txtNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(139, 149, 202, -1));
 
         cbCategoria.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbCategoria.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbCategoriaActionPerformed(evt);
+            }
+        });
         panel1.add(cbCategoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(139, 192, -1, -1));
 
         txtPrecio.addActionListener(new java.awt.event.ActionListener() {
@@ -136,13 +160,15 @@ public class JF_Tienda extends javax.swing.JFrame {
         });
         panel1.add(txtPrecio, new org.netbeans.lib.awtextra.AbsoluteConstraints(139, 238, 202, -1));
 
-        jScrollPane1.setViewportView(txtListaCategoria);
-
-        panel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 360, 426, 141));
-
         btnRegistrar.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         btnRegistrar.setText("Registrar");
         panel1.add(btnRegistrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(206, 297, 119, 53));
+
+        txtAreaListaCat.setColumns(20);
+        txtAreaListaCat.setRows(5);
+        jScrollPane2.setViewportView(txtAreaListaCat);
+
+        panel1.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(54, 370, 390, 110));
 
         panel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -231,6 +257,7 @@ public class JF_Tienda extends javax.swing.JFrame {
 
     private void btnRegistroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistroActionPerformed
          mostrarPanel(panel1, panel2);
+         //txtAreaListaCat.setText(listCat_Product.mostrarCatProducto1());
          //mostrarPanel(Panel2, Panel3);
     }//GEN-LAST:event_btnRegistroActionPerformed
 
@@ -264,13 +291,25 @@ public class JF_Tienda extends javax.swing.JFrame {
         
         CatProducto catPro = new CatProducto(id, nombreCat);
         
-        if(!catPro.validarID_NoCotener_Caracteres(txtIDCat.getText())){
+        if(catPro.validarID_NoCotener_Caracteres(txtIDCat.getText())){
            listCat_Product.registrarCategoria(catPro);
+           Limpiar();
+        }else{
+            JOptionPane.showMessageDialog(null,
+                "Error! El ID debe ser numérico",
+                "Error",
+                JOptionPane.ERROR_MESSAGE
+            );
         }
+        txtAreaListaCat.setText(listCat_Product.mostrarCatProducto1());
+        cargarCategorias();
         
-        txtListaCategoria.setText(listCat_Product.mostrarCatProducto1());
         
     }//GEN-LAST:event_btnRegistrarCatActionPerformed
+
+    private void cbCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbCategoriaActionPerformed
+
+    }//GEN-LAST:event_cbCategoriaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -317,7 +356,7 @@ public class JF_Tienda extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel lblCategoria;
     private javax.swing.JLabel lblId;
     private javax.swing.JLabel lblNombre;
@@ -326,9 +365,9 @@ public class JF_Tienda extends javax.swing.JFrame {
     private javax.swing.JPanel panel1;
     private javax.swing.JPanel panel2;
     private javax.swing.JPanel panelPadre;
+    private javax.swing.JTextArea txtAreaListaCat;
     private javax.swing.JTextField txtIDCat;
     private javax.swing.JTextField txtId;
-    private javax.swing.JTextPane txtListaCategoria;
     private javax.swing.JTextField txtNombre;
     private javax.swing.JTextField txtNombreCat;
     private javax.swing.JTextField txtPrecio;

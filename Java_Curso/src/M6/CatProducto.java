@@ -43,11 +43,6 @@ public class CatProducto {
             int id = Integer.parseInt(idCat);
             return id > 0;
         }catch(NumberFormatException e){
-            JOptionPane.showMessageDialog(null,
-                "Error! El ID debe ser numérico",
-                "Error",
-                JOptionPane.ERROR_MESSAGE
-            );
             return false;
         }
     }
