@@ -354,10 +354,15 @@ public class JFRameListaProfesor extends javax.swing.JFrame {
         ocultar.setVisible(false);
         mostrar.setVisible(true);
 
-        mostrar.repaint();
-        mostrar.revalidate();
+        mostrar.repaint(); //los vuelve a dibujar
+        mostrar.revalidate(); //ajusta el tamaño y posición de los componentes
     }
 
+    /*    
+        modeloTabla.addRow(new Object[]{cedula, nombre, edad});
+        mostrar.revalidate(); // ajusta el layout
+        mostrar.repaint();    // redibuja la tabla
+    */
     
 }
 
