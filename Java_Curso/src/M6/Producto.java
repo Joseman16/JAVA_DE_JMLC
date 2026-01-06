@@ -60,7 +60,7 @@ public class Producto {
     
     
     public boolean validarCastegoria(Producto pro){
-        if(pro.getCategoria()!= null){
+        if(pro.getCategoria() == null){
             return true;
         }
         return false;
@@ -78,18 +78,26 @@ public class Producto {
         }
     }*/
     
+    public boolean validarID(String id){
+        try{
+            int ids = Integer.parseInt(id);
+            return ids > 0;
+        }catch(NumberFormatException e){
+            return false;
+        }
+    }
+
     public boolean validarPrecioDesdeTexto(String precioTexto){
         try{
             double precio = Double.parseDouble(precioTexto);
             return precio > 0;
         }catch(NumberFormatException e){
-            JOptionPane.showMessageDialog(null,
-                "Error! El precio debe ser numérico",
-                "Error",
-                JOptionPane.ERROR_MESSAGE
-            );
             return false;
         }
+    }
+
+    public boolean validarCategoria(){
+        return categoria != null;
     }
 
 }

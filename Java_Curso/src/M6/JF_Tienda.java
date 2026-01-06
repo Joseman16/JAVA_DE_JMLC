@@ -35,9 +35,15 @@ public class JF_Tienda extends javax.swing.JFrame {
         
     }
     
-    public void Limpiar(){
+    public void LimpiarRegistro_Categoria(){
         txtIDCat.setText("");
         txtNombreCat.setText("");
+    }
+    
+    public void LimpiarRegistro_Producto(){
+        txtId.setText("");
+        txtNombre.setText("");
+        txtPrecio.setText("");
     }
     
     public void cargarCategorias() {
@@ -52,6 +58,18 @@ public class JF_Tienda extends javax.swing.JFrame {
 
         cbCategoria.setModel(modelo);
     }
+    
+    public CatProducto EncontrarCategoria(String nombre) {
+        for (int i = 0; i < listCat_Product.catProductos.size(); i++) {
+            CatProducto catProducto = listCat_Product.catProductos.get(i);
+
+            if (catProducto.getNombreCat().equalsIgnoreCase(nombre)) {
+                return catProducto; // categoría encontrada
+            }
+        }
+        return null; // no se encontró la categoría
+    }
+
    
     /**
      * This method is called from within the constructor to initialize the form.
@@ -162,6 +180,11 @@ public class JF_Tienda extends javax.swing.JFrame {
 
         btnRegistrar.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         btnRegistrar.setText("Registrar");
+        btnRegistrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegistrarActionPerformed(evt);
+            }
+        });
         panel1.add(btnRegistrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(206, 297, 119, 53));
 
         txtAreaListaCat.setColumns(20);
@@ -293,7 +316,7 @@ public class JF_Tienda extends javax.swing.JFrame {
         
         if(catPro.validarID_NoCotener_Caracteres(txtIDCat.getText())){
            listCat_Product.registrarCategoria(catPro);
-           Limpiar();
+           LimpiarRegistro_Categoria();
         }else{
             JOptionPane.showMessageDialog(null,
                 "Error! El ID debe ser numérico",
@@ -310,6 +333,47 @@ public class JF_Tienda extends javax.swing.JFrame {
     private void cbCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbCategoriaActionPerformed
 
     }//GEN-LAST:event_cbCategoriaActionPerformed
+
+    private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
+       // VALIDAR ID
+    if(!new Producto().validarID(txtId.getText())){
+        JOptionPane.showMessageDialog(this,
+            "Error! El ID debe ser numérico y mayor a 0",
+            "Error",
+            JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+
+    // VALIDAR PRECIO
+    if(!new Producto().validarPrecioDesdeTexto(txtPrecio.getText())){
+        JOptionPane.showMessageDialog(this,
+            "Error! El precio debe ser numérico y mayor a 0",
+            "Error",
+            JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+
+    int id = Integer.parseInt(txtId.getText());
+    String nombre = txtNombre.getText();
+    String categoriaNombre = cbCategoria.getSelectedItem().toString();
+    double precio = Double.parseDouble(txtPrecio.getText());
+
+    CatProducto catpro = EncontrarCategoria(categoriaNombre);
+
+    if(catpro == null){
+        JOptionPane.showMessageDialog(this,
+            "Seleccione una categoría válida",
+            "Error",
+            JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+
+    Producto pro = new Producto(id, nombre, catpro, precio);
+    listProducto.registrarProducto(pro);
+    listProducto.mostrarProducto_enConsola();
+ 
+       
+    }//GEN-LAST:event_btnRegistrarActionPerformed
 
     /**
      * @param args the command line arguments

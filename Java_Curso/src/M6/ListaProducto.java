@@ -32,9 +32,42 @@ public class ListaProducto {
         return false;
     }
     
-    public void registrarProducto(){
-        
+    /*public void registrarProducto(Producto pro){
+        if(!verificarID_Repetidas(pro)){
+            if(!pro.validarCastegoria(pro)){
+                JOptionPane.showMessageDialog(null, "Registrado Correctamente", "Exito",JOptionPane.INFORMATION_MESSAGE);
+                AgregarProducto(pro);
+            }
+        }else{
+            JOptionPane.showMessageDialog(null, "Error, ID repetida", "Error",JOptionPane.ERROR);
+        }
+    }*/
+    
+    
+    public void registrarProducto(Producto pro){
+        if(verificarID_Repetidas(pro)){
+            JOptionPane.showMessageDialog(null,
+                "Error, ID repetida",
+                "Error",
+                JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        if(!pro.validarCategoria()){
+            JOptionPane.showMessageDialog(null,
+                "Error, categoría inválida",
+                "Error",
+                JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        AgregarProducto(pro);
+        JOptionPane.showMessageDialog(null,
+            "Producto registrado correctamente",
+            "Éxito",
+            JOptionPane.INFORMATION_MESSAGE);
     }
+
             
 
 }
