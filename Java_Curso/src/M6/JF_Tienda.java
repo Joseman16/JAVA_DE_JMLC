@@ -7,6 +7,7 @@ package M6;
 import java.util.ArrayList;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -16,6 +17,8 @@ public class JF_Tienda extends javax.swing.JFrame {
 
     ListaProducto listProducto;
     ListaCatProducto listCat_Product;
+    
+    DefaultTableModel df;
     
     public JF_Tienda() {
         initComponents();
@@ -28,12 +31,32 @@ public class JF_Tienda extends javax.swing.JFrame {
         listProducto = new ListaProducto();
         listCat_Product = new ListaCatProducto();
         
-        cargarCategorias();
+        df = new DefaultTableModel();
+        df.addColumn("Id");
+        df.addColumn("Nombre");
+        df.addColumn("Categoria");
+        df.addColumn("Precio");
+        tblProducto.setModel(df);
         
-        
-        
+        CargarTabla();
         
     }
+    
+    public void CargarTabla(){
+        df.setRowCount(0);
+        
+        for(Producto pro: listProducto.productos){
+            Object[] fila = new Object[4];
+            fila[0] = pro.getId();
+            fila[1] = pro.getNombre();
+            fila[2] = pro.getCategoria().getId();
+            fila[3] = pro.getPrecio();
+            
+            df.addRow(fila);
+        } 
+        
+    }
+    
     
     public void LimpiarRegistro_Categoria(){
         txtIDCat.setText("");
@@ -104,6 +127,10 @@ public class JF_Tienda extends javax.swing.JFrame {
         txtNombreCat = new javax.swing.JTextField();
         txtIDCat = new javax.swing.JTextField();
         btnRegistrarCat = new javax.swing.JButton();
+        panel3 = new javax.swing.JPanel();
+        jLabel4 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tblProducto = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -230,12 +257,34 @@ public class JF_Tienda extends javax.swing.JFrame {
         });
         panel2.add(btnRegistrarCat, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 200, 110, 70));
 
+        panel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel4.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        jLabel4.setText("Registro de Productos");
+        panel3.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 30, 340, -1));
+
+        tblProducto.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(tblProducto);
+
+        panel3.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 80, 370, 270));
+
         javax.swing.GroupLayout panelPadreLayout = new javax.swing.GroupLayout(panelPadre);
         panelPadre.setLayout(panelPadreLayout);
         panelPadreLayout.setHorizontalGroup(
             panelPadreLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelPadreLayout.createSequentialGroup()
-                .addComponent(panel1, javax.swing.GroupLayout.DEFAULT_SIZE, 471, Short.MAX_VALUE)
+                .addContainerGap()
+                .addComponent(panel1, javax.swing.GroupLayout.DEFAULT_SIZE, 487, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(panelPadreLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnRegistrarCategoria, javax.swing.GroupLayout.Alignment.TRAILING)
@@ -245,7 +294,12 @@ public class JF_Tienda extends javax.swing.JFrame {
             .addGroup(panelPadreLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(panelPadreLayout.createSequentialGroup()
                     .addComponent(panel2, javax.swing.GroupLayout.PREFERRED_SIZE, 474, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 156, Short.MAX_VALUE)))
+                    .addGap(0, 178, Short.MAX_VALUE)))
+            .addGroup(panelPadreLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelPadreLayout.createSequentialGroup()
+                    .addContainerGap(15, Short.MAX_VALUE)
+                    .addComponent(panel3, javax.swing.GroupLayout.PREFERRED_SIZE, 484, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(153, Short.MAX_VALUE)))
         );
         panelPadreLayout.setVerticalGroup(
             panelPadreLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -262,6 +316,11 @@ public class JF_Tienda extends javax.swing.JFrame {
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelPadreLayout.createSequentialGroup()
                     .addGap(0, 0, Short.MAX_VALUE)
                     .addComponent(panel2, javax.swing.GroupLayout.PREFERRED_SIZE, 517, javax.swing.GroupLayout.PREFERRED_SIZE)))
+            .addGroup(panelPadreLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(panelPadreLayout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(panel3, javax.swing.GroupLayout.DEFAULT_SIZE, 505, Short.MAX_VALUE)
+                    .addContainerGap()))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -280,6 +339,7 @@ public class JF_Tienda extends javax.swing.JFrame {
 
     private void btnRegistroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistroActionPerformed
          mostrarPanel(panel1, panel2);
+         mostrarPanel(panel1, panel3);
          //txtAreaListaCat.setText(listCat_Product.mostrarCatProducto1());
          //mostrarPanel(Panel2, Panel3);
     }//GEN-LAST:event_btnRegistroActionPerformed
@@ -294,10 +354,13 @@ public class JF_Tienda extends javax.swing.JFrame {
 
     private void btnRegistrarCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarCategoriaActionPerformed
         mostrarPanel(panel2, panel1);
+        mostrarPanel(panel2, panel3);
     }//GEN-LAST:event_btnRegistrarCategoriaActionPerformed
 
     private void btnListaProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListaProductoActionPerformed
-        // TODO add your handling code here:
+        CargarTabla();
+        mostrarPanel(panel3, panel1);
+        mostrarPanel(panel3, panel2);
     }//GEN-LAST:event_btnListaProductoActionPerformed
 
     private void txtNombreCatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombreCatActionPerformed
@@ -420,6 +483,8 @@ public class JF_Tienda extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel lblCategoria;
     private javax.swing.JLabel lblId;
@@ -428,7 +493,9 @@ public class JF_Tienda extends javax.swing.JFrame {
     private javax.swing.JLabel lblTitulo;
     private javax.swing.JPanel panel1;
     private javax.swing.JPanel panel2;
+    private javax.swing.JPanel panel3;
     private javax.swing.JPanel panelPadre;
+    private javax.swing.JTable tblProducto;
     private javax.swing.JTextArea txtAreaListaCat;
     private javax.swing.JTextField txtIDCat;
     private javax.swing.JTextField txtId;

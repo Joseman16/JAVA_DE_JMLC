@@ -33,6 +33,8 @@ public class JFRameListaProfesor extends javax.swing.JFrame {
 
         tblProfesor.setModel(df);
         
+        cargarTabla();
+        
     }
     
     public void cargarTabla(){
